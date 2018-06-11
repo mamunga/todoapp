@@ -1,15 +1,12 @@
 package hu.mamunga.todo.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -17,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
-import javax.swing.border.Border;
 
 import hu.mamunga.todo.controller.PriorityController;
 import hu.mamunga.todo.controller.StatusController;
@@ -38,7 +34,6 @@ public class TaskView extends JPanel {
 	private JTextField nameField;
 	private JTextArea descriptionField;
 	private JComboBox priorityField;
-	private JCheckBox doneField;
 	private JComboBox statusField;
 
 	public TaskView() {
@@ -86,7 +81,7 @@ public class TaskView extends JPanel {
 		this.add(saveButton);
 		this.add(startTimerButton);
 
-		SpringUtilities.makeCompactGrid(this, this.getComponentCount() / 2, 2, 6, 6, 6, 6);
+		SpringUtilities.makeCompactGrid(this, (int) Math.round((double) this.getComponentCount() / 2.0), 2, 6, 6, 6, 6);
 
 		this.setVisible(true);
 		this.setEnabled(true);
@@ -103,7 +98,8 @@ public class TaskView extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			task.setName(nameField.getText());
 			task.setDescription(descriptionField.getText());
-			task.setPriority(PriorityController.getInstance().getPriorityByName((String) priorityField.getSelectedItem()));
+			task.setPriority(
+					PriorityController.getInstance().getPriorityByName((String) priorityField.getSelectedItem()));
 			TaskController.getInstance().updateTask(task);
 			MainWindow.getInstance().refresh();
 		}
